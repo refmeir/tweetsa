@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ title }}</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+</head>
+
+<body>
+    <h1>{{ title }}</h1>
+
+
+    <div class="container">
+        <div>
+            <h2>Hourly Statistics</h2>
+            <canvas id="chart-area1" width="200" height="200"/>
+        </div>
+
+        <div>
+            <h2>Daily Statistics</h2>
+            <canvas id="chart-area2" width="200" height="200"/>
+        </div>
+
+        <div>
+            <h2>Weekly Statistics</h2>
+            <canvas id="chart-area3" width="200" height="200"/>
+        </div>
+    </div>
+
+
+    <script>
+      var pieData = [
+        {% for item, label, colors in set %}
+          {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+          },
+        {% endfor %}
+      ];
+
+
+      // draw pie charts
+      var ctx1 = document.getElementById("chart-area1").getContext("2d");
+      var myPie1 = new Chart(ctx1).Pie(pieData.slice(0,3));
+      var ctx2 = document.getElementById("chart-area2").getContext("2d");
+      var myPie2 = new Chart(ctx2).Pie(pieData.slice(3,6));
+      var ctx3 = document.getElementById("chart-area3").getContext("2d");
+      var myPie3 = new Chart(ctx3).Pie(pieData.slice(6,9));
+    </script>
+</body>
+</html>

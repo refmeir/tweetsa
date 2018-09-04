@@ -1,0 +1,8 @@
+flask
+twython
+pandas
+sqlalchemy
+textblob
+flask
+flask_restful
+kafka-python

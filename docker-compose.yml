@@ -1,0 +1,32 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+
+  tweets_provider:
+    build: .
+    volumes:
+      - .:/tweets_provider
+
+  zookeeper:
+    image: "wurstmeister/zookeeper:latest"
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: "wurstmeister/kafka:latest"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_CREATE_TOPICS: "messages:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+    ports:
+      - "9092:9092"
+    expose:
+      - 9092
+
